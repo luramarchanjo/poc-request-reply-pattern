@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
+import java.time.LocalDateTime.*
+import kotlin.random.Random
 
 @Component
 class TransactionProducer(val rabbitTemplate: RabbitTemplate) {
@@ -19,6 +21,6 @@ class TransactionProducer(val rabbitTemplate: RabbitTemplate) {
         log.info("Sent $request")
     }
 
-    private fun buildTransactionRequest() = TransactionRequest(Math.random(), LocalDateTime.now())
+    private fun buildTransactionRequest() = TransactionRequest(Random.nextDouble(75.00, 150.00), now())
 
 }
