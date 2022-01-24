@@ -9,11 +9,15 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - rabbitmq-data:/var/lib/rabbitmq/
+      - rabbitmq-data:/var/log/rabbitmq
     networks:
-      - rabbitmq_network
+      - rabbitmq-network
+
+volumes:
+  rabbitmq-data:
+    driver: local
 
 networks:
-  rabbitmq_network:
+  rabbitmq-network:
     driver: bridge
