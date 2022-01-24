@@ -27,4 +27,6 @@ class InMemoryRepository<E : Entity<ID>, ID> {
 
     fun exists(id: ID) = database.containsKey(id)
 
+    fun findById(id: ID) = database[id]
+
 }

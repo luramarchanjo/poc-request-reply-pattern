@@ -7,7 +7,7 @@ import java.util.*
 data class Transaction(
     val amount: Double,
     val processAt: LocalDateTime,
-    val status: TransactionStatus
+    var status: TransactionStatus
 ) : Entity<UUID> {
 
     enum class TransactionStatus {
@@ -19,7 +19,11 @@ data class Transaction(
     private var id: UUID? = null
 
     override fun generateId(): UUID {
-        return id ?: UUID.randomUUID()
+        if (id == null) {
+            id = UUID.randomUUID()
+        }
+
+        return id!!
     }
 
     override fun getId(): UUID? {

@@ -2,6 +2,7 @@ package br.com.poc
 
 import br.com.poc.domain.Transaction
 import br.com.poc.domain.Transaction.TransactionStatus.PENDING
+import br.com.poc.domain.event.Metadata
 import br.com.poc.domain.event.TransactionRequest
 import br.com.poc.repository.TransactionInMemoryRepository
 import org.slf4j.LoggerFactory
@@ -34,6 +35,6 @@ class TransactionProducer(
     }
 
     private fun buildTransactionRequest(transaction: Transaction) =
-        TransactionRequest(transaction.amount, transaction.processAt)
+        TransactionRequest(transaction.amount, transaction.processAt, Metadata(transaction.getId()!!))
 
 }
