@@ -1,4 +1,4 @@
-package br.com.poc.event
+package br.com.poc.domain.event
 
 import java.io.Serializable
 
