@@ -1,6 +1,6 @@
 package br.com.poc
 
-import br.com.poc.command.ProcessTransactionCommand
+import br.com.poc.event.TransactionRequest
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.scheduling.annotation.Scheduled
@@ -14,11 +14,11 @@ class TransactionProducer(val rabbitTemplate: RabbitTemplate) {
 
     @Scheduled(fixedDelay = 1000L)
     fun execute() {
-        val command = buildProcessTransactionCommand()
-        rabbitTemplate.convertAndSend("request-queue", command)
-        log.info("Sent $command")
+        val request = buildTransactionRequest()
+        rabbitTemplate.convertAndSend("request-queue", request)
+        log.info("Sent $request")
     }
 
-    private fun buildProcessTransactionCommand() = ProcessTransactionCommand(Math.random(), LocalDateTime.now())
+    private fun buildTransactionRequest() = TransactionRequest(Math.random(), LocalDateTime.now())
 
 }
