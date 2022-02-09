@@ -6,7 +6,6 @@ import br.com.poc.repository.TransactionInMemoryRepository
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
-import java.lang.RuntimeException
 
 @Component
 class TransactionConsumer(
@@ -15,7 +14,7 @@ class TransactionConsumer(
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @RabbitListener(queues = ["request-queue"])
+    @RabbitListener(queues = ["response-queue"])
     fun execute(response: TransactionResponse) {
         log.info("Processing response=[$response]")
         val correlationId = response.metadata.correlationId
