@@ -26,17 +26,17 @@ class TransactionProducer(
 
     @Scheduled(fixedDelay = 5000L)
     fun execute() {
-        val temporaryQueueName = createTemporaryQueue()
         val transaction = buildAndSaveTransaction()
+        val temporaryQueueName = createTemporaryQueue(transaction.getId()!!)
         val request = buildTransactionRequest(transaction, temporaryQueueName)
 
         rabbitTemplate.convertAndSend("request-queue", request)
         log.info("Sent $request")
     }
 
-    private fun createTemporaryQueue(): String {
-        val temporaryQueueName = "temporary-response-queue-${UUID.randomUUID()}"
-        val temporaryQueue = Queue(temporaryQueueName, false, false, true, mapOf("x-expires" to 60000L))
+    private fun createTemporaryQueue(transactionId: UUID): String {
+        val temporaryQueueName = "response-queue-transaction-$transactionId"
+        val temporaryQueue = Queue(temporaryQueueName, false, false, true, mapOf("x-expires" to 30000L))
 
         return amqpAdmin.declareQueue(temporaryQueue)!!
     }
