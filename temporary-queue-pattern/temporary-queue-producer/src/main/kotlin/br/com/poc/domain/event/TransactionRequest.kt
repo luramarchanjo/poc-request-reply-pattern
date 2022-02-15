@@ -6,7 +6,7 @@ import java.util.*
 data class TransactionRequest(
     val amount: Double,
     val processAt: LocalDateTime,
-    val metadata: Metadata = Metadata()
+    val metadata: Metadata
 )
 
-data class Metadata(val correlationId: UUID = UUID.randomUUID())
+data class Metadata(val correlationId: UUID, val replyAt: String)

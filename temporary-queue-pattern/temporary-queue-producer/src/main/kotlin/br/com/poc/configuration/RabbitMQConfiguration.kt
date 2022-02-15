@@ -30,7 +30,4 @@ class RabbitMQConfiguration {
     @Bean
     fun createRequestQueue() = Queue("request-queue")
 
-    @Bean
-    fun createResponseQueue() = Queue("response-queue")
-
 }
