@@ -21,7 +21,7 @@ class TransactionConsumer(
         if (transactionRepository.exists(correlationId)) {
             val transaction = transactionRepository.findById(correlationId)
                 ?: throw RuntimeException("Transactin=[$correlationId] was not found")
-            transaction.status = TransactionStatus.valueOf(response.status)
+            transaction.status = TransactionStatus.valueOf(response.status.uppercase())
 
             transactionRepository.save(transaction)
         } else {
